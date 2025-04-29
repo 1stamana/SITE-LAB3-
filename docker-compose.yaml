@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: nginx_php
+    ports:
+      - "80:80"
+    volumes:
+      - ./html:/var/www/html  # Монтируем код PHP
+    depends_on:
+      - db
+    networks:
+      - app_network
+
+  db:
+    image: mariadb:latest
+    container_name: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: kali
+      MYSQL_DATABASE: db_first
+      MYSQL_PASSWORD: kali
+    volumes:
+      - db_data:/var/lib/mysql  # Сохраняем данные БД
+    networks:
+      - app_network
+
+volumes:
+  db_data:  # Volume для MariaDB
+
+networks:
+  app_network:
+    driver: bridge
