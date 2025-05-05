@@ -1,33 +1,39 @@
+# Версия формата docker-compose файла
 version: '3.8'
 
+# Определение сервисов (контейнеров)
 services:
+  # Основной сервис приложения
   app:
-    build: .
-    container_name: nginx_php
+    build: .  # Собирать образ из Dockerfile в текущей директории
+    container_name: nginx_php  # Имя контейнера
     ports:
-      - "80:80"
+      - "80:80"  # Проброс портов: хост:контейнер
     volumes:
-      - ./html:/var/www/html  # Монтируем код PHP
+      - ./html:/var/www/html  # Монтирование директории с PHP кодом в контейнер
     depends_on:
-      - db
+      - db  # Зависимость - этот сервис запускается после db
     networks:
-      - app_network
+      - app_network  # Подключение к сети
 
+  # Сервис базы данных
   db:
-    image: mariadb:latest
-    container_name: mariadb
+    image: mariadb:latest  # Использование официального образа MariaDB
+    container_name: mariadb  # Имя контейнера
     environment:
-      MYSQL_ROOT_PASSWORD: kali
-      MYSQL_DATABASE: db_first
-      MYSQL_PASSWORD: kali
+      MYSQL_ROOT_PASSWORD: kali  # Пароль root пользователя
+      MYSQL_DATABASE: db_first  # Создаваемая база данных при старте
+      MYSQL_PASSWORD: kali  # Пароль для пользователя базы данных
     volumes:
-      - db_data:/var/lib/mysql  # Сохраняем данные БД
+      - db_data:/var/lib/mysql  # Монтирование тома для сохранения данных БД
     networks:
-      - app_network
+      - app_network  # Подключение к сети
 
+# Определение томов для хранения данных
 volumes:
-  db_data:  # Volume для MariaDB
+  db_data:  # Том для хранения данных MariaDB (сохраняется между перезапусками)
 
+# Определение сетей
 networks:
   app_network:
-    driver: bridge
+    driver: bridge  # Использование bridge-драйвера для сети
