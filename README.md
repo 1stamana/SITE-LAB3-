@@ -8,3 +8,5 @@
 # Проверка на наличие записи в БД
 ![image](https://github.com/user-attachments/assets/f465bb93-90a5-4d0b-adc7-57340c8a1cc3)
 
+# HTTPS GITLAB
+![image](https://github.com/user-attachments/assets/e7ecc5a7-5696-4a92-8298-21cb12cd1acc)
